@@ -30,9 +30,16 @@ function handleIndexRequest (url, req, res) {
 
 
 function handleMessages (req, res) {
-  // 
+  const { method } = req;
+ 
   // Store in DB
   // Reqeust Type?// DO CHANGES
+  if (method === 'GET') {
+    res.end('Thanks for the GET')
+  } else if (method === 'POST') {
+    res.end('Ah... I see you are a man of culture');
+  }
+
     // GET? -> serve DB content, 
     // POST? -> store message in DB
   // retrieve from DB
@@ -45,6 +52,7 @@ function router(url, req, res) {
     handleIndexRequest(url, req, res);
     return;
   }
+  url = url.replace('/', '');
   if (routerObj.hasOwnProperty(url)) {
     routerObj[url](req, res)
   } else {
