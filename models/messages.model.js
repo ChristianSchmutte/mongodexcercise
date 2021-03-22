@@ -1,11 +1,14 @@
 const db = require('../db/db');
 function getAllMessages () {
-  return db.msgs;
+  
+  return {
+    msgs: ['hello', 'brainfart', 'pipikaka']
+  }
 }
 
 function postMessage (msg) {
-  if (typeof msg !== 'string') throw Error('Expected message to be a string type');
+  
   db.msgs.push(msg);
-  // return db.msgs;
+  return msg;
 }
 module.exports = {getAllMessages, postMessage};

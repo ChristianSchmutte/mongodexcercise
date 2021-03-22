@@ -1,16 +1,10 @@
-const express = require('express');
-const router = express.Router();
-const path = require('path');
-const messageController = require('./controller/messages.controller');
+const Koa = require('koa');
+const Router = require('@koa/router');
+const messagesController = require('./controller/messages.controller');
 
-router.get('/', (req, res) => {
+const router = new Router();
 
-  res.send('Hello World');
-
-});
-
-router.get('/messages', messageController.getAllMessages);
-router.post('/messages', messageController.postMessage);
-
+router.get('/messages', messagesController.getAllMessages)
+router.post('/messages', messagesController.postMessage);
 
 module.exports = router;

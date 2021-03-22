@@ -1,19 +1,20 @@
 const messagesModel = require('../models/messages.model');
 
 
-function getAllMessages (req, res) {
+function getAllMessages (ctx) {
   const messages = messagesModel.getAllMessages();
-  res.json(messages);
+  console.log(messages);
+  ctx.body = messages;
 }
 
-function postMessage (req, res) {
-  const { body } = req;
+async function postMessage (ctx) {
+  // const { body } = ctx.request;
+  // console.log(ctx.request.body);
   try {
-    
-    messagesModel.postMessage(body.msg);
-    res.status(200).json(body);
+    const result = messagesModel.postMessage(ctx.request.body);
+    ctx.body = result;
   } catch (error) {
-    res.status(404).json({msg: `${error}`});
+    ctx.status(404).body('Sorry');
   }
   
 }

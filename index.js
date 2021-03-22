@@ -1,12 +1,19 @@
-const express = require('express');
-const app = express();
+const Koa = require('koa');
+const app = new Koa()
 const PORT = 3000;
 const router = require('./router');
-const bodyParser = require('body-parser');
+const static = require('koa-static');
+const bodyParser = require('koa-bodyparser');
 
-app.use(bodyParser.json());
-app.use(express.static('client'));
-app.use(router);
+
+app.use(static('./client'));
+app.use(bodyParser());
+app.on('error', err => {
+  log.error('server error', err)
+});
+app.use(router.routes(), router.allowedMethods())
+
+
 
 app.listen(PORT, ()=> {
   console.log(`Listening on http://localhost:${PORT}`);
