@@ -22,7 +22,7 @@ const insertDocument = async function (msg) {
   instance.timestamp = Date.now();
 
   await instance.save();
-
+  return instance;
 
   // const message = new Message()
 
@@ -43,22 +43,15 @@ const insertDocument = async function (msg) {
   // return result
 };
 
-const findDocuments = async function(client) {
-    await client.connect();
-    const db = client.db('messagesdb');
-    console.log('GET: Connected successfully to server');
-    // Get the documents collection
-    const collection = db.collection('messages');
-    // Find some documents
-    let result;
+const findDocuments = async function() {
+    
     try {
-      result = await collection.find({}).toArray();
-      console.log(result)
-    } catch (e) {
-      console.log(e);
+      const instances = await Message.find({});
+      return instances;
+    } catch (err) {
+      console.log(err);
     }
-    // console.log(result)
-    return result;
+
 };
 
 module.exports = {insertDocument, findDocuments};

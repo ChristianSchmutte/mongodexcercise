@@ -6,16 +6,23 @@ const model = require('../models/message');
 
 async function saveMessage (req, res) {
 
-  const msg = req.body;
-  const result = await model.insertDocument(client, msg);
-  res.status(201).json(result);
+  try {
+    const msg = req.body;
+    const result = await model.insertDocument(msg);
+    res.status(201).json(result);
+  } catch(err) {
+    res.status(500).json({msg: 'Server error, please try again later'});
+  }
 }
 
 async function getAllMessages (req, res) {
-  const messages = await model.findDocuments(client);
+  try {
+    const messages = await model.findDocuments();
+    res.status(200).json(messages);
+  } catch (error) {
+    res.status(500).json({msg: 'Server error, please try again later'});
+  }
 
-  // res.send('Hello from GET ALL');
-  res.json(messages);
 }
 
 
