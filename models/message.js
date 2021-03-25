@@ -1,4 +1,4 @@
-const insertDocument = async function(db, callback) {
+const insertDocument = async function (db, callback) {
   // Get the documents collection
   const collection = db.collection('messages');
   // Insert one documents
