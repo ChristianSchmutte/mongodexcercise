@@ -4,8 +4,11 @@ const model = require('../models/message');
 
 
 
-function saveMessage (req, res) {
-  res.send('Save message from controller');
+async function saveMessage (req, res) {
+
+  const msg = req.body;
+  const result = await model.insertDocument(client, msg);
+  res.status(201).json(result);
 }
 
 async function getAllMessages (req, res) {

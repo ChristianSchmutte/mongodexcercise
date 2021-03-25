@@ -1,14 +1,19 @@
-const insertDocument = async function (db, callback) {
+const insertDocument = async function (client, msg) {
   // Get the documents collection
+  await client.connect();
+  const db = client.db('messagesdb');
   const collection = db.collection('messages');
-  // Insert one documents
+  const {content, authorid} = msg;
+  
   let result;
   try {
-    result = await collection.insertOne([{ content: "testmesage", authorid: false, timestamp: Date.now() }]);
+    result = await collection.insertOne({content, authorid, timestamp: Date.now()});
+    result = result.ops;
   } catch(e) {
     console.log(e);
   }
-  console.log(result); // acknowledged ?
+  console.log(result); 
+  return result
 };
 
 const findDocuments = async function(client) {
@@ -26,7 +31,6 @@ const findDocuments = async function(client) {
       console.log(e);
     }
     // console.log(result)
-    await client.close();
     return result;
 };
 
