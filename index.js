@@ -1,20 +1,7 @@
-const Koa = require('koa');
-const app = new Koa()
+const express = require('express');
+const app = express();
 const PORT = 3000;
-const router = require('./router');
-const static = require('koa-static');
-const bodyParser = require('koa-bodyparser');
 
+app.get('/', (req, res) => res.send('Hello Mongo'))
 
-app.use(static('./client'));
-app.use(bodyParser());
-app.on('error', err => {
-  log.error('server error', err)
-});
-app.use(router.routes(), router.allowedMethods())
-
-
-
-app.listen(PORT, ()=> {
-  console.log(`Listening on http://localhost:${PORT}`);
-});
+app.listen(PORT, () => console.log(`listening on http://localhost:${PORT}`));
